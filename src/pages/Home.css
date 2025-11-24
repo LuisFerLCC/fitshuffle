@@ -1,0 +1,80 @@
+/* CONTENEDOR GENERAL */
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* VIDEO DE FONDO */
+.home-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* CAPA OSCURA LIGERA (como tu Figma que tiene alto contraste) */
+.home-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.15);
+  z-index: -1;
+}
+
+/* CONTENIDO */
+.home-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* BOTONES SUPERIORES */
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding-top: 40px;
+}
+
+.home-btn-light {
+  background: transparent;
+  border: 2px solid black;
+  padding: 10px 26px;
+  font-size: 14px;
+  font-family: Helvetica;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.home-btn-light:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+/* LOGO CENTRADO */
+.home-logo-block {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.home-logo {
+  width: 360px;
+  height: auto;
+}
+
+.home-subtitle {
+  margin-top: 8px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 400;
+}

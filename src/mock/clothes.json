@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "type": "top",
+    "color": "black",
+    "image": "/mock/tshirt-black.png"
+  },
+  {
+    "id": 2,
+    "type": "pants",
+    "color": "denim",
+    "image": "/mock/jeans.png"
+  }
+]
