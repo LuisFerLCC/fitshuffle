@@ -18,7 +18,6 @@
   z-index: -2;
 }
 
-/* CAPA OSCURA LIGERA (como tu Figma que tiene alto contraste) */
 .home-overlay {
   position: fixed;
   top: 0;

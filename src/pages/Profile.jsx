@@ -34,13 +34,12 @@ export default function Profile() {
           <a href="#" className="outfit-link">See All →</a>
         </div>
 
-        {/* STATS — SIN DASHBOARD */}
-        <div className="card-small">
+        <a href="/stats" className="card-small card-link">
           <div className="icon-row">
             <FiBarChart2 size={24} className="card-icon" />
             <h2 className="card-small-title">STATS</h2>
           </div>
-        </div>
+        </a>
 
         {/* SETTINGS */}
         <div className="card-small">

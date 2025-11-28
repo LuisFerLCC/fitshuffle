@@ -204,3 +204,9 @@
   font-size: 14px;
   line-height: 1.4;
 }
+
+.card-link {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}

@@ -16,7 +16,7 @@ export default function Navbar({ dark = false }) {
 
         {/* LINKS */}
         <div className="navbar-links">
-          <a href="/inicio" className="active">INICIO</a>
+          <a href="/inicio" >INICIO</a>
           <a href="/closet">CLOSET</a>
           <a href="/generator">GENERADOR</a>
           <a href="/cuenta">CUENTA</a>
