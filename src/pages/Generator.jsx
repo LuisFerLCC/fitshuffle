@@ -6,7 +6,7 @@ export default function Generator() {
     <div className="page generator-page black-bg">
 
       {/* HEADER IMPORTADO COMO COMPONENTE */}
-      <Navbar dark={true} />
+      <Navbar generatorActive dark={true} />
 
       {/* GENERADOR DE OUTFITS */}
       <OutfitGenerator />

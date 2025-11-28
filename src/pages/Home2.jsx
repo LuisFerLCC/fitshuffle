@@ -6,7 +6,7 @@ export default function Home2() {
     <div className="page">
 
       {/* HEADER IMPORTADO COMO COMPONENTE */}
-      <Navbar />
+      <Navbar inicioActive />
 
       {/* CONTENIDO PRINCIPAL */}
       <div className="home2-grid">
@@ -28,7 +28,7 @@ export default function Home2() {
           </div>
 
           <p className="home2-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua.
           </p>
 

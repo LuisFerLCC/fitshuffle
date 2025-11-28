@@ -1,11 +1,12 @@
 import logo from "../assets/logo.png";
 import logoBlanco from "../assets/logo-blanco.png";
+import { Link } from "react-router-dom";
 
-export default function Navbar({ dark = false }) {
+export default function Navbar({ dark = false, inicioActive = false, closetActive = false, generatorActive = false, cuentaActive = false,  }) {
   const logoSrc = dark ? logoBlanco : logo;
-  
+
   return (
-    
+
     <div className={`navbar-exact ${dark ? 'navbar-dark' : ''}`}>
       <div className="navbar-inner">
 
@@ -16,10 +17,10 @@ export default function Navbar({ dark = false }) {
 
         {/* LINKS */}
         <div className="navbar-links">
-          <a href="/inicio" className="active">INICIO</a>
-          <a href="/closet">CLOSET</a>
-          <a href="/generator">GENERADOR</a>
-          <a href="/cuenta">CUENTA</a>
+          <Link to="/inicio" className={inicioActive ? "active" : ""}>INICIO</Link>
+          <Link to="/closet" className={closetActive ? "active" : ""}>CLOSET</Link>
+          <Link to="/generator" className={generatorActive ? "active" : ""}>GENERADOR</Link>
+          <Link to="/cuenta" className={cuentaActive ? "active" : ""}>CUENTA</Link>
         </div>
 
         {/* ICONO ⋮ */}

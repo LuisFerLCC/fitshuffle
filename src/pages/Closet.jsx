@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/logo.png";
+import Navbar from "../components/Navbar";
 
 export default function Closet() {
 
@@ -9,26 +9,7 @@ export default function Closet() {
     <div className="page closet-page">
 
       {/* HEADER */}
-      <div className="navbar-exact">
-        <div className="navbar-inner">
-          <div className="navbar-logo">
-            <img src={logo} alt="fitshuffle logo" />
-          </div>
-
-          <div className="navbar-links">
-            <a href="/inicio">INICIO</a>
-            <a href="/closet" className="active">CLOSET</a>
-            <a href="/generator">GENERADOR</a>
-            <a href="/cuenta">CUENTA</a>
-          </div>
-
-          <div className="navbar-dots">
-            <span>●</span>
-            <span>●</span>
-            <span>●</span>
-          </div>
-        </div>
-      </div>
+      <Navbar closetActive />
 
       {/* TITULO CLOSET */}
       <div className="closet-header">

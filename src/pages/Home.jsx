@@ -1,5 +1,6 @@
 import "./Home.css";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -24,19 +25,19 @@ export default function Home() {
 
         {/* BOTONES SUPERIORES */}
         <div className="home-buttons">
-          <button
-            onClick={() => (window.location.href = "/login")}
+          <Link
+            to="/login"
             className="btn-light"
           >
             INICIAR SESIÓN
-          </button>
+          </Link>
 
-          <button
-            onClick={() => (window.location.href = "/signup")}
+          <Link
+            to="/signup"
             className="btn-light"
           >
             CREAR CUENTA
-          </button>
+          </Link>
         </div>
 
         {/* LOGO CENTRAL */}
