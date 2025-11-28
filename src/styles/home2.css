@@ -1,0 +1,97 @@
+/* GRID BASE */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+}
+
+.hero-big-box {
+  background: #d9d9d9;
+  border-radius: 18px;
+  padding: 40px;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.shuffle-arrows {
+  font-size: 48px;
+  margin-top: 20px;
+}
+
+.outfit-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.outfit-box {
+  background: #d9d9d9;
+  border-radius: 16px;
+  padding: 12px;
+  width: 100%;
+}
+
+/* HOME2 PIXEL PERFECT */
+.home2-container {
+  padding-top: 20px;
+}
+
+.home2-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+}
+
+.home2-left {
+  background: #d9d9d9;
+  padding: 40px;
+  border-radius: 26px;
+}
+
+.home2-title {
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.home2-text {
+  font-size: 14px;
+  width: 80%;
+  margin-top: 20px;
+}
+
+.home2-outfits-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 34px;
+}
+
+.outfit-card {
+  background: #d0d0d0;
+  border-radius: 32px;
+  height: 240px;
+  padding: 24px;
+  position: relative;
+}
+
+.outfit-label {
+  position: absolute;
+  left: 26px;
+  bottom: 20px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.home2-right {
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.home2-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

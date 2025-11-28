@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Closet from "./pages/Closet";      // cuando esté lista
 import Generator from "./pages/Generator"; 
+import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
 
         {/* NOT FOUND */}
         <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
+
+        <Route path="/cuenta" element={<Profile />} />
+
 
       </Routes>
     </BrowserRouter>

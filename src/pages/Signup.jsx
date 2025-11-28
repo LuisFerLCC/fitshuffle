@@ -10,11 +10,11 @@ export default function Signup() {
       {/* FORMULARIO */}
       <form className="auth-form">
 
-        <label className="auth-label">Correo electrónico</label>
+        <label className="auth-label">Usuario</label>
         <input
-          type="email"
+          type="text"
           className="auth-input"
-          placeholder="tucorreo@mail.com"
+          placeholder="Tu usuario"
         />
 
         <label className="auth-label">Contraseña</label>

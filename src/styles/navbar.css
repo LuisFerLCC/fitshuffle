@@ -1,0 +1,76 @@
+/* -------------------------------------------------------------------
+   NAVBAR UNIVERSAL (ÚNICO HEADER DE TODA LA APP)
+------------------------------------------------------------------- */
+
+.navbar-universal {
+  width: 100%;
+  padding: 26px 34px;
+  border: 2px solid;
+  box-sizing: border-box;
+}
+
+/* MODO CLARO */
+.navbar-universal.light {
+  background: #ffffff;
+  border-color: #000;
+}
+
+/* MODO OSCURO */
+.navbar-universal.dark {
+  background: #111;
+  border-color: #fff;
+}
+
+/* CONTENIDO */
+.navbar-universal-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* LOGO */
+.navbar-universal-logo-img {
+  width: 110px;
+}
+
+.navbar-universal.dark .navbar-universal-logo-img {
+  filter: invert(100%);
+}
+
+/* LINKS */
+.navbar-universal-links {
+  display: flex;
+  gap: 42px;
+}
+
+.navbar-universal-links a {
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.navbar-universal.light .navbar-universal-links a {
+  color: #000;
+}
+
+.navbar-universal.dark .navbar-universal-links a {
+  color: #fff;
+}
+
+.navbar-universal-links a.active {
+  font-weight: 700;
+}
+
+/* DOTS */
+.navbar-universal-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.navbar-universal.light .navbar-universal-dots {
+  color: #000;
+}
+
+.navbar-universal.dark .navbar-universal-dots {
+  color: #fff;
+}
