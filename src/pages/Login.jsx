@@ -45,7 +45,9 @@ export default function Login() {
       TotpMultiFactorGenerator.assertionForSignIn(uid, otp);
 
     return mfaResolver.resolveSignIn(multiFactorAssertion).then(() => {
-      navigate("/inicio");
+      navigate("/inicio", {
+        replace: true
+      });
     }).catch(err => {
       if (err?.code === "auth/invalid-verification-code") {
         setErrorMessage("CÓDIGO INCORRECTO")

@@ -1,7 +1,7 @@
-import { multiFactor, TotpMultiFactorGenerator } from "firebase/auth";
-import { useEffect, useMemo, useState } from "react";
+import { multiFactor, reload, TotpMultiFactorGenerator } from "firebase/auth";
+import { useCallback, useEffect, useState } from "react";
 import { useAuthState, useSendEmailVerification, useSignOut } from "react-firebase-hooks/auth";
-import { useNavigate, } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { auth } from "../firebase";
 import logo from "../assets/logo.png"
 import QRCode from "react-qr-code";
@@ -12,49 +12,55 @@ export default function Mfa() {
   const [user] = useAuthState(auth);
   const [sendEmailVerification, , error] = useSendEmailVerification(auth);
   const [signOut] = useSignOut(auth);
-  const isEmailVerified = useMemo(() => {
-    return !!(user?.emailVerified)
-  }, [user]);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const [otp, setOtp] = useState("");
   const [qrUri, setQrUri] = useState("");
   const [totpSecret, setTotpSecret] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    if (!user) return;
-    if (!isEmailVerified) { sendEmailVerification(); return; }
+  const generateTotpSecret = useCallback(async () => {
+    try {
+      const multiFactorSession = await multiFactor(user).getSession();
+      const totpSecret = await TotpMultiFactorGenerator.generateSecret(
+        multiFactorSession
+      );
+      const totpUri = totpSecret.generateQrCodeUrl(
+        user.email,
+        "fitshuffle"
+      );
 
-    (async () => {
-      try {
-        const multiFactorSession = await multiFactor(user).getSession();
-        const totpSecret = await TotpMultiFactorGenerator.generateSecret(
-          multiFactorSession
-        );
-        const totpUri = totpSecret.generateQrCodeUrl(
-          user.email,
-          "fitshuffle"
-        );
-
-        setQrUri(totpUri);
-        setTotpSecret(totpSecret);
-      } catch (err) {
-        if (err?.code === "auth/requires-recent-login") {
-          signOut();
-          navigate("/login");
-        }
-
-        if (err?.code === "auth/too-many-requests") {
-          setErrorMessage("DEMASIADOS INTENTOS. VUELVA A INTENTAR MÁS TARDE.")
-        }
+      setQrUri(totpUri);
+      setTotpSecret(totpSecret);
+    } catch (err) {
+      if (err?.code === "auth/requires-recent-login") {
+        signOut();
+        navigate("/login", {
+          replace: true
+        });
       }
-    })();
-  }, [isEmailVerified, user, navigate, sendEmailVerification, signOut]);
+
+      if (err?.code === "auth/too-many-requests") {
+        setErrorMessage("DEMASIADOS INTENTOS. VUELVA A INTENTAR MÁS TARDE.")
+      }
+    }
+  }, [user, navigate, signOut]);
+
+  useEffect(() => {
+    if (!user || !user?.emailVerified) return;
+    if (multiFactor(user).enrolledFactors.length > 0) return navigate("/cuenta");
+
+    setIsEmailVerified(true);
+
+    generateTotpSecret();
+  }, [user, navigate, generateTotpSecret]);
 
   useEffect(() => {
     if (error?.code === "auth/requires-recent-login") {
       signOut();
-      navigate("/login");
+      navigate("/login", {
+        replace: true
+      });
     }
 
     if (error?.code === "auth/too-many-requests") {
@@ -81,6 +87,26 @@ export default function Mfa() {
         setErrorMessage("CÓDIGO INCORRECTO")
       }
     });
+  }
+
+  async function onVerifySubmit(e) {
+    e.preventDefault();
+
+    await reload(user);
+
+    if (user.emailVerified) {
+      setErrorMessage("");
+      setIsEmailVerified(true);
+      generateTotpSecret();
+    } else {
+      setErrorMessage("CORREO NO VERIFICADO");
+    }
+  }
+
+  async function onSendEmail(e) {
+    e.preventDefault();
+    await sendEmailVerification();
+    alert("Correo enviado.")
   }
 
   return (
@@ -138,12 +164,26 @@ export default function Mfa() {
             AGREGAR APP DE AUTENTICACIÓN
           </button>
 
-        </form> : <form className="auth-form">
+        </form> : <form className="auth-form" onSubmit={onVerifySubmit}>
 
           <p className="auth-info">
-              Recibiste un correo electrónico de verificación. Verifica tu
+              Verifica tu
               dirección de correo electrónico antes de continuar.
           </p>
+
+          { errorMessage &&
+            <p className="auth-error">
+              {errorMessage}
+            </p>
+          }
+
+          <button onClick={onSendEmail} className="auth-button">
+            ENVIAR CORREO
+          </button>
+
+          <button type="submit" className="auth-button">
+            CONTINUAR
+          </button>
 
         </form>
       }
