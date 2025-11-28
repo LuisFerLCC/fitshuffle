@@ -1,36 +1,12 @@
 import homePhoto from "../assets/home-photo.jpg";
-import logo from "../assets/logo.png";
+import Navbar from "../components/Navbar";
 
 export default function Home2() {
   return (
     <div className="page">
 
-      {/* HEADER EXACTO */}
-      <div className="navbar-exact">
-        <div className="navbar-inner">
-
-          {/* Logo */}
-          <div className="navbar-logo">
-            <img src={logo} alt="fitshuffle logo" />
-          </div>
-
-          {/* Links */}
-          <div className="navbar-links">
-            <a href="/inicio" className="active">INICIO</a>
-            <a href="/closet">CLOSET</a>
-            <a href="/generator">GENERADOR</a>
-            <a href="/cuenta">CUENTA</a>
-          </div>
-
-          {/* Tres puntos */}
-          <div className="navbar-dots">
-            <span>●</span>
-            <span>●</span>
-            <span>●</span>
-          </div>
-
-        </div>
-      </div>
+      {/* HEADER IMPORTADO COMO COMPONENTE */}
+      <Navbar />
 
       {/* CONTENIDO PRINCIPAL */}
       <div className="home2-grid">

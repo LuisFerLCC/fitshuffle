@@ -1,60 +1,53 @@
-import logo from "../assets/logo.png";
+import Navbar from "../components/Navbar";
+import "../styles/perfil.css";
+
+import { FiLogOut, FiHeart, FiSettings, FiBarChart2 } from "react-icons/fi";
 
 export default function Profile() {
+
+  const handleLogout = () => {
+    window.location.href = "/";  
+  };
+
   return (
-    <div className="page profile-page">
+    <div className="profile-page black-bg">
+      <Navbar dark={true} />
 
-      {/* HEADER EXACTO */}
-      <div className="navbar-exact">
-        <div className="navbar-inner">
+      <div className="profile-grid-figma">
 
-          <div className="navbar-logo">
-            <img src={logo} alt="fitshuffle logo" />
-          </div>
+        {/* CARD DEL PERFIL */}
+        <div className="card-profile">
+          <div className="circle-deco"></div>
 
-          <div className="navbar-links">
-            <a href="/inicio">INICIO</a>
-            <a href="/closet">CLOSET</a>
-            <a href="/generator">GENERADOR</a>
-            <a href="/cuenta" className="active">CUENTA</a>
-          </div>
+          <button className="logout-btn" onClick={handleLogout}>
+            <FiLogOut size={26} />
+          </button>
 
-          <div className="navbar-dots">
-            <span>●</span>
-            <span>●</span>
-            <span>●</span>
-          </div>
-
-        </div>
-      </div>
-
-      {/* CONTENIDO */}
-      <div className="profile-grid">
-
-        {/* COLUMNA IZQUIERDA */}
-        <div className="profile-left">
-
-          {/* FOTO DE PERFIL */}
-          <div className="profile-pic"></div>
-
-          {/* USERNAME */}
-          <h2 className="profile-username">JUANPISMATA11</h2>
-
+          <h1 className="profile-username">USERNAME</h1>
         </div>
 
-        {/* COLUMNA DERECHA */}
-        <div className="profile-right">
+        {/* OUTFIT CARD */}
+        <div className="card-outfit">
+          <FiHeart size={28} className="heart" />
 
-          {/* TARJETA STATS */}
-          <div className="profile-card">
-            <h3 className="profile-card-title">STATS</h3>
+          <p className="outfit-title">THE NORMAL</p>
+          <a href="#" className="outfit-link">See All →</a>
+        </div>
+
+        {/* STATS — SIN DASHBOARD */}
+        <div className="card-small">
+          <div className="icon-row">
+            <FiBarChart2 size={24} className="card-icon" />
+            <h2 className="card-small-title">STATS</h2>
           </div>
+        </div>
 
-          {/* TARJETA SETTINGS */}
-          <div className="profile-card">
-            <h3 className="profile-card-title">SETTINGS ⚙️</h3>
+        {/* SETTINGS */}
+        <div className="card-small">
+          <div className="icon-row">
+            <FiSettings size={24} className="card-icon" />
+            <h2 className="card-small-title">SETTINGS</h2>
           </div>
-
         </div>
 
       </div>

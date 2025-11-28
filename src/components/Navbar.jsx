@@ -1,13 +1,17 @@
 import logo from "../assets/logo.png";
+import logoBlanco from "../assets/logo-blanco.png";
 
-export default function Navbar() {
+export default function Navbar({ dark = false }) {
+  const logoSrc = dark ? logoBlanco : logo;
+  
   return (
-    <div className="navbar-exact">
+    
+    <div className={`navbar-exact ${dark ? 'navbar-dark' : ''}`}>
       <div className="navbar-inner">
 
         {/* LOGO */}
         <div className="navbar-logo">
-          <img src={logo} alt="fitshuffle" />
+          <img src={logoSrc} alt="fitshuffle" />
         </div>
 
         {/* LINKS */}

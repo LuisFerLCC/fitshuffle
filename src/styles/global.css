@@ -475,6 +475,31 @@ html, body {
   color: #000;
 }
 
+/* NAVBAR DARK MODE */
+.navbar-dark {
+  background: #1a1a1a;
+  border-color: #333;
+}
+
+.navbar-dark .navbar-links a,
+.navbar-dark .navbar-dots span {
+  color: #fff;
+}
+
+/* GENERATOR PAGE - FONDO NEGRO */
+.generator-page.black-bg {
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* PROFILE PAGE - FONDO NEGRO */
+.profile-page.black-bg {
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+}
+
 /* CONTENEDOR GLOBAL IGUAL A FIGMA */
 .frame-container {
   width: 94%;
@@ -853,7 +878,7 @@ html, body {
 /* ====================== */
 
 .profile-page {
-  padding-top: 20px;
+  background: #000;
 }
 
 /* GRID PRINCIPAL */
@@ -908,4 +933,20 @@ html, body {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* GENERADORRR */
+
+.generator-page {
+  background: #000;
+}
+
+.navbar-dark {
+  background: #1a1a1a;
+  border-color: #f0eded;
+}
+
+.navbar-dark .navbar-links a,
+.navbar-dark .navbar-dots span {
+  color: #fff;
 }
