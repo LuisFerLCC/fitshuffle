@@ -9,6 +9,8 @@ import Signup from "./pages/Signup";
 import Closet from "./pages/Closet";      // cuando esté lista
 import Generator from "./pages/Generator";
 import Profile from "./pages/Profile";
+import Stats from "./pages/stats";
+
 import { PublicRoute } from "./components/PublicRoute";
 import Mfa from "./pages/Mfa";
 
@@ -37,6 +39,8 @@ function App() {
         <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
 
         <Route path="/cuenta" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/stats" element={<PrivateRoute><Stats /></PrivateRoute>} />
+
 
 
       </Routes>

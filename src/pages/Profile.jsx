@@ -41,21 +41,12 @@ export default function Profile() {
           </h1>
         </div>
 
-        {/* OUTFIT CARD */}
-        <div className="card-outfit">
-          <FiHeart size={28} className="heart" />
-
-          <p className="outfit-title">THE NORMAL</p>
-          {/* <a href="#" className="outfit-link">See All →</a> */}
-        </div>
-
-        {/* STATS — SIN DASHBOARD */}
-        <div className="card-small">
+        <a href="/stats" className="card-small card-link">
           <div className="icon-row">
             <FiBarChart2 size={24} className="card-icon" />
             <h2 className="card-small-title">STATS</h2>
           </div>
-        </div>
+        </a>
 
         {/* SETTINGS */}
         <div className="card-small card-settings">
