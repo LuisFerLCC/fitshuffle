@@ -17,7 +17,7 @@ export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    console.error(error)
+    console.error(error);
 
     if (error?.code === "auth/invalid-email") {
       setErrorMessage("CORREO INVÁLIDO")

@@ -1,9 +1,74 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth"
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, doc, orderBy, query,  serverTimestamp,  setDoc,  where } from "firebase/firestore";
+import { ref as storageRef } from "firebase/storage";
+import { auth, firestore, storage } from "../firebase";
 import Navbar from "../components/Navbar";
+import { GarmentCard } from "../components/GarmentCard";
+import { useUploadFile } from "react-firebase-hooks/storage";
+
+const GARMENT_TYPES = [
+  "Camisas", "Abrigos", "Prendas inferiores", "Calzado", "Una pieza", "Gorras",
+  "Lentes", "Otros accesorios"
+];
 
 export default function Closet() {
-
+  const [user] = useAuthState(auth);
+  const [garmentsSnapshot] = useCollection(
+    query(
+      collection(firestore, "prendas"),
+      where("idUsuario", "==", user.uid),
+      orderBy("fecha", "desc"),
+    )
+  );
+  const [uploadFile, uploading, snapshot, error] = useUploadFile();
+  const [uploadDoc, setUploadDoc] = useState(null);
+  const [selectedType, setSelectedType] = useState(0);
+  const [garmentName, setGarmentName] = useState("");
+  const garments = useMemo(() => {
+    return garmentsSnapshot?.docs.filter(doc => doc.data().tipo === selectedType) ?? []
+  }, [garmentsSnapshot, selectedType]);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => console.error(error), [error])
+
+  const uploadPercentage = useMemo(() => {
+    if (!snapshot) return 0;
+    return Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100)
+  }, [snapshot]);
+
+  async function onUploadImage(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 500 * 1024) {
+      alert("La imagen no debe sobrepasar los 500kB.");
+      return;
+    }
+
+    const garmentDoc = doc(collection(firestore, "prendas"));
+
+    const fileRef = storageRef(storage, `${user.uid}/${garmentDoc.id}`);
+    await uploadFile(fileRef, file, {
+      contentType: "image/jpeg"
+    });
+
+    setUploadDoc(garmentDoc);
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+
+    await setDoc(uploadDoc, {
+      idUsuario: user.uid,
+      nombre: garmentName,
+      tipo: selectedType,
+      fecha: serverTimestamp()
+    });
+
+    setUploadDoc(null);
+    setShowModal(false);
+  }
 
   return (
     <div className="page closet-page">
@@ -19,21 +84,21 @@ export default function Closet() {
 
       {/* FILTROS */}
       <div className="closet-filters">
-        <div className="filter-chip active">Todo</div>
-        <div className="filter-chip">Camisas</div>
-        <div className="filter-chip">Pantalones</div>
-        <div className="filter-chip">Zapatos</div>
-        <div className="filter-chip">Accesorios</div>
+        {GARMENT_TYPES.map((type, index) =>
+          <button
+            key={index}
+            className={`filter-chip ${index === selectedType ? "active" : ""}`}
+            onClick={() => setSelectedType(index)}>
+            {type}
+          </button>
+        ) }
       </div>
 
       {/* GRID */}
       <div className="closet-grid">
-        <div className="closet-item"></div>
-        <div className="closet-item"></div>
-        <div className="closet-item"></div>
-        <div className="closet-item"></div>
-        <div className="closet-item"></div>
-        <div className="closet-item"></div>
+        {garments.map(garment => (
+          <GarmentCard key={garment.id} garment={garment} />
+        )) }
       </div>
 
     {/* MODAL SUBE TU ROPA */}
@@ -50,21 +115,46 @@ export default function Closet() {
         <h2 className="modal-upload-title">SUBE TU ROPA</h2>
 
         <p className="modal-upload-subtitle">
-            ASEGURATE DE QUE TUS IMAGENES SEAN CLARAS Y CON UN FONDO <br />
-            CLARO PARA UN MEJOR RESULTADO.
+            SUBE UNA IMAGEN EN FORMATO .jpg O .jpeg QUE NO SOBREPASE LOS 500kB.
         </p>
 
-        <div className="modal-upload-buttons">
-            <button className="modal-upload-btn">SUBE TU ARCHIVO</button>
-            <button className="modal-upload-btn">TOMA LA FOTO</button>
+        {uploading ? <p className="modal-upload-subtitle">
+                CARGANDO... ({uploadPercentage}%)
+        </p> : !uploadDoc ? <><div className="modal-upload-buttons">
+              <label className="modal-upload-btn">
+                SUBE TU ARCHIVO
+                <input type="file" name="" id="file" accept=".jpg,.jpeg" onInput={onUploadImage} style={{ opacity: 0, position: "absolute", left: "-9999px" }} />
+              </label>
         </div>
 
         <div className="modal-upload-icons">
            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="80" height="80" viewBox="0 0 50 50">
 <path d="M 5 4 C 3.3550302 4 2 5.3550302 2 7 L 2 16 L 2 18 L 2 43 C 2 44.64497 3.3550302 46 5 46 L 45 46 C 46.64497 46 48 44.64497 48 43 L 48 19 L 48 16 L 48 11 C 48 9.3550302 46.64497 8 45 8 L 18 8 C 18.08657 8 17.96899 8.000364 17.724609 7.71875 C 17.480227 7.437136 17.179419 6.9699412 16.865234 6.46875 C 16.55105 5.9675588 16.221777 5.4327899 15.806641 4.9628906 C 15.391504 4.4929914 14.818754 4 14 4 L 5 4 z M 5 6 L 14 6 C 13.93925 6 14.06114 6.00701 14.308594 6.2871094 C 14.556051 6.5672101 14.857231 7.0324412 15.169922 7.53125 C 15.482613 8.0300588 15.806429 8.562864 16.212891 9.03125 C 16.619352 9.499636 17.178927 10 18 10 L 45 10 C 45.56503 10 46 10.43497 46 11 L 46 13.1875 C 45.685108 13.07394 45.351843 13 45 13 L 5 13 C 4.6481575 13 4.3148915 13.07394 4 13.1875 L 4 7 C 4 6.4349698 4.4349698 6 5 6 z M 5 15 L 45 15 C 45.56503 15 46 15.43497 46 16 L 46 19 L 46 43 C 46 43.56503 45.56503 44 45 44 L 5 44 C 4.4349698 44 4 43.56503 4 43 L 4 18 L 4 16 C 4 15.43497 4.4349698 15 5 15 z"></path>
 </svg>
-            <img width="80" height="80" src="https://img.icons8.com/ios/50/camera--v3.png" alt="camera--v3"/>
-        </div>
+        </div></> : <form className="auth-form" onSubmit={onSubmit}>
+            <label className="auth-label">Nombre:</label>
+            <input
+              type="text"
+              className="auth-input"
+              placeholder="Playera roja GAP"
+              value={garmentName}
+              onChange={e => setGarmentName(e.target.value)}
+                  />
+
+            <label className="auth-label">Tipo:</label>
+            <select
+              type="text"
+              className="auth-input"
+              value={selectedType}
+              onChange={e => setSelectedType(e.target.value)}
+                  >
+                    {GARMENT_TYPES.map((type, index) => <option key={index} value={index}>{ type }</option>) }
+            </select>
+
+            <button type="submit" className="auth-button">
+              AGREGAR
+            </button>
+          </form>}
 
         </div>
 
