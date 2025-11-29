@@ -528,11 +528,12 @@ html, body {
 
 .outfit-card {
   flex: 1;
-  background: #d0d0d0;         /* gris como en Figma */
+  background: #d0d0d0;
+  border: 0;         /* gris como en Figma */
   border-radius: 32px;          /* esquinas super redondas */
+  display: block;
   position: relative;
   height: 240px;                /* alto similar a tu captura */
-  padding: 24px;
   overflow: hidden;
 }
 
@@ -541,10 +542,14 @@ html, body {
   position: absolute;
   left: 26px;
   bottom: 20px;
+  right: 26px;
   font-size: 32px;
   font-weight: 700;
   letter-spacing: 2px;
   color: #ffffff;
+  overflow: hidden;
+  hyphens: auto;
+  text-overflow: ellipsis;
 }
 
 /* Si luego quieres poner las fotos dentro de las tarjetas,
@@ -719,6 +724,7 @@ html, body {
 
 /* GRID */
 .closet-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 26px;
@@ -732,6 +738,10 @@ html, body {
   height: 280px;
   background: #d9d9d9;
   border-radius: 26px;
+  overflow: hidden;
+}
+.closet-item-dark {
+  background: black;
 }
 
 .closet-item img {
@@ -987,4 +997,19 @@ html, body {
 .navbar-dark .navbar-links a,
 .navbar-dark .navbar-dots span {
   color: #fff;
+}
+
+#outfit-name {
+  background-color: transparent;
+  color: white;
+
+  width: 100%;
+
+  padding: 0;
+  border: 0;
+  outline: none;
+
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 36pt;
+  font-weight: bold;
 }

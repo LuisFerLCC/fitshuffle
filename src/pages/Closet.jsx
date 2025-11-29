@@ -97,7 +97,7 @@ export default function Closet() {
       {/* GRID */}
       <div className="closet-grid">
         {garments.map(garment => (
-          <GarmentCard key={garment.id} garment={garment} />
+          <GarmentCard key={garment.id} id={garment.id} data={garment.data()} />
         )) }
       </div>
 
